@@ -72,6 +72,7 @@ Clone the repository.
 Create a .env file in the backend folder using the .env.example as a guide:
 
 Bash
+
 GEOTAB_SERVER=my.geotab.com
 GEOTAB_DATABASE=your_database
 GEOTAB_USERNAME=your_username
@@ -79,6 +80,8 @@ GEOTAB_PASSWORD=your_password
 GEOTAB_SESSION_ID=your_session_id
 GOOGLE_GENAI_API_KEY=your_gemini_api_key
 GOOGLE_MAPS_API_KEY=your_google_maps_key
+
+---------------------------------------------------------
 Install dependencies in the root:
 
 Bash

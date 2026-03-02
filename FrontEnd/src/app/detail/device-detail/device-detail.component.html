@@ -1,0 +1,106 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-8">
+    <button mat-icon-button (click)="goBack()" class="text-gray-600">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="flex flex-col">
+      <h1 class="text-2xl font-bold text-gray-800 m-0">IA Analytics - {{ name() }}</h1>
+      <span class="text-sm text-gray-500">DeviceId: {{ deviceId() }}</span>
+    </div>
+  </div>
+
+  @if (isLoading() || analysis()) {
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left Column: Analysis Summary -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 flex items-center gap-3 transition-all duration-500" [class.bg-blue-100]="!isLoading()"
+          [class.thinking-bg]="isLoading()">
+          <mat-icon class="text-white">psychology</mat-icon>
+          <h2 class="text-black text-lg font-semibold m-0">IA Analytics</h2>
+        </div>
+
+        <div class="p-8">
+          <div class="mb-8">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Summary</span>
+            @if (isLoading()) {
+            <div class="space-y-2">
+              <div class="skeleton h-6 w-full"></div>
+              <div class="skeleton h-6 w-3/4"></div>
+            </div>
+            } @else {
+            <p class="text-md font-medium leading-relaxed" [ngClass]="getRiskColor(analysis()?.risk)">
+              {{ analysis()?.summary }}
+            </p>
+            }
+          </div>
+
+          <div class="mb-8">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">IA
+              Recommendation</span>
+            @if (isLoading()) {
+            <div class="skeleton h-16 w-full rounded-lg"></div>
+            } @else {
+            <div class="bg-orange-50 border border-orange-100 rounded-lg p-4 flex items-center gap-4">
+              <span class="text-orange-900 font-semibold">{{ analysis()?.recommendation }}</span>
+            </div>
+            }
+          </div>
+
+          <div class="mb-8">
+            @for (evidenceUrl of analysis()?.visual_evidence_url; track evidenceUrl) {
+            <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <mat-icon class="text-red-500 mt-0.5">warning</mat-icon>
+              <img [src]="evidenceUrl" alt="Snapshot Sentinel AI" class="snapshot-img" width="80" height="80">
+              <p class="caption">Camera Capture - Incident Reference</p>
+              <a [href]="evidenceUrl" target="_blank" class="view-link">Open Full Image</a>
+            </div>
+            }
+          </div>
+          <!-- Map Section -->
+          <div class="mt-8">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Last position</span>
+            <div class="w-full h-[400px] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 relative">
+              @if (location()) {
+              <iframe width="100%" height="100%" frameborder="0" style="border:0"
+                [src]="'https://maps.google.com/maps?q=' + location()?.latitude + ',' + location()?.longitude + '&z=15&output=embed' | safeUrl"
+                allowfullscreen>
+              </iframe>
+              } @else {
+              <div class="absolute inset-0 flex items-center justify-center text-gray-400 flex-col">
+                <mat-icon class="text-4xl mb-2">map</mat-icon>
+                <span>loading map...</span>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Exceptions and Update -->
+    <div class="flex flex-col gap-6">
+      <!-- Exceptions Card -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-4">List events</span>
+        <div class="space-y-4">
+          @if (isLoading()) {
+          @for (i of [1,2]; track i) {
+          <div class="skeleton h-12 w-full rounded-lg"></div>
+          }
+          } @else {
+          @for (exc of analysis()?.events; track exc) {
+          <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <mat-icon class="text-red-500 mt-0.5">warning</mat-icon>
+            <span class="text-sm text-gray-700 font-medium">{{ exc }}</span>
+          </div>
+          }
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+  }
+</div>

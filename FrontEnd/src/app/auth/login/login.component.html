@@ -1,0 +1,78 @@
+<div class="login-container">
+  <div class="login-split">
+    <!-- Left Side: Form -->
+    <div class="login-form-side">
+      <div class="logo-container">
+      </div>
+
+      <div class="form-wrapper">
+        <h1 class="title">Iniciar sesión</h1>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Server</mat-label>
+            <input matInput formControlName="server" placeholder="my.geotab.com">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Database</mat-label>
+            <input matInput formControlName="database" placeholder="Geotab Database name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username (email)</mat-label>
+            <input matInput formControlName="username" type="email" placeholder="geotab user access">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+          </mat-form-field>
+
+          @if (errorMessage()) {
+          <div class="error-message">
+            <mat-icon>error</mat-icon>
+            <span>{{ errorMessage() }}</span>
+          </div>
+          }
+
+          <button mat-flat-button color="primary" class="submit-btn" [disabled]="loginForm.invalid || isLoading()">
+            @if (isLoading()) {
+            <span>Autenticando...</span>
+            } @else {
+            <span>Login</span>
+            }
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Right Side: Image/Branding -->
+    <div class="login-brand-side">
+      <div class="brand-content">
+        <div class="brand-visual">
+          <!-- Mocking the visual from the image -->
+          <div class="central-node">
+            <mat-icon>lock</mat-icon>
+          </div>
+          <div class="orbit-nodes">
+            <div class="node"><mat-icon>analytics</mat-icon></div>
+            <div class="node"><mat-icon>security</mat-icon></div>
+            <div class="node"><mat-icon>electric_car</mat-icon></div>
+            <div class="node"><mat-icon>co2</mat-icon></div>
+          </div>
+        </div>
+        <div class="fleet-illustration">
+          <!-- Fleet of vehicles placeholder -->
+          <div class="vehicles">
+            <mat-icon class="v-icon">local_shipping</mat-icon>
+            <mat-icon class="v-icon">directions_car</mat-icon>
+            <mat-icon class="v-icon">construction</mat-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+{
+  "name": "Geotab AI Fleet Analyzer",
+  "description": "An advanced fleet management dashboard integrated with Geotab API and AI-driven analysis for vehicle exceptions and risk context.",
+  "requestFramePermissions": []
+}
